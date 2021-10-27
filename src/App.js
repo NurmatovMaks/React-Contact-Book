@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Input from "./input/Input";
+import Contacts from "./contactList/Contacts";
+import Edit from "./Edit/Edit";
+// import Routes from "./Routes";
+
 
 function App() {
+  const [todos, setTodos] = useState([])
+  function addTask(task) {
+    let todosArr = [...todos, task]
+    setTodos(todosArr)
+  }
+
+  function deleteTask(id) {
+    let newArr = todos.filter((item) => {
+      return item.id !== id
+    })
+    setTodos(newArr)
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <Input addTask={addTask} />
+      <Contacts todos={todos} deleteTask={deleteTask} />
+      <Edit />
+    </ >
+  )
+
 }
 
 export default App;
